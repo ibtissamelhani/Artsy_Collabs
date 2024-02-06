@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Partner;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class PartnerController extends Controller
+class UserController extends Controller
 {
      /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class PartnerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Partner $partner)
+    public function show(User $user)
     {
         //
     }
@@ -43,7 +43,7 @@ class PartnerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Partner $partner)
+    public function edit(User $user)
     {
         //
     }
@@ -51,7 +51,7 @@ class PartnerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Partner $partner)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -59,7 +59,7 @@ class PartnerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Partner $partner)
+    public function destroy(User $user)
     {
         //
     }
