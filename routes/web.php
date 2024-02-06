@@ -4,6 +4,7 @@ use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,10 +31,13 @@ Route::resource('projects', ProjectController::class);
 // users route
 Route::resource('users', UserController::class);
 
-
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+});
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
