@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(1);
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('image')->nullable();
             $table->integer('budget');
             $table->unsignedBigInteger('partner_id');
             $table->foreign('partner_id')

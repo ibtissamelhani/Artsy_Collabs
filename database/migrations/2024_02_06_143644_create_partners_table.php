@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone');
             $table->string('address');
-            $table->integer('type')->default(0);
-            $table->string('logo')->nullable();
+            $table->string('type');
             $table->timestamps();
             $table->softDeletes();
         });
