@@ -34,10 +34,6 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsTo(Role::class);
     }
 
-    public function projectUser():HasMany
-    {
-        return $this->hasMany(ProjectUser::class);
-    }
     /**
      * The attributes that should be hidden for serialization.
      *
