@@ -13,7 +13,8 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        //
+        $partners = Partner::all();
+        return view('admin.partner.index', compact('partners'));
     }
 
     /**
@@ -29,7 +30,9 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $partner = Partner::create($request->all());
+        $partner->addMediaFromRequest('image')->toMediaCollection('images');
+        return redirect()->route('partners.index');
     }
 
     /**
@@ -37,7 +40,7 @@ class PartnerController extends Controller
      */
     public function show(Partner $partner)
     {
-        //
+        return view('admin.partner.show' , compact('partner'));
     }
 
     /**
@@ -45,7 +48,7 @@ class PartnerController extends Controller
      */
     public function edit(Partner $partner)
     {
-        //
+        return view('admin.partner.edit', compact('partner'));
     }
 
     /**
@@ -53,14 +56,17 @@ class PartnerController extends Controller
      */
     public function update(Request $request, Partner $partner)
     {
-        //
+        $partner->update($request->all());
+        $partner->clearMediaCollection('images'); 
+        $partner->addMediaFromRequest('image')->toMediaCollection('images');
+        return redirect()->route('partners.index');
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Partner $partner)
     {
-        //
+        $partner->delete();
+        return redirect()->route('partners.index');
     }
 }

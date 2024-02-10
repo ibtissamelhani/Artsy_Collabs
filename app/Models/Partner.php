@@ -18,7 +18,6 @@ class Partner extends Model implements HasMedia
         'phone',
         'address',
         'type',
-        'logo',
     ];
 
     public function projects(): HasMany
