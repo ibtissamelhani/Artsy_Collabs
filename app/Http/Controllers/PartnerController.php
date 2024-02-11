@@ -31,6 +31,7 @@ class PartnerController extends Controller
     public function store(Request $request)
     {
         $partner = Partner::create($request->all());
+        
         $partner->addMediaFromRequest('image')->toMediaCollection('images');
         return redirect()->route('partners.index');
     }
@@ -57,8 +58,11 @@ class PartnerController extends Controller
     public function update(Request $request, Partner $partner)
     {
         $partner->update($request->all());
-        $partner->clearMediaCollection('images'); 
-        $partner->addMediaFromRequest('image')->toMediaCollection('images');
+        if ($request->hasFile('image')) {
+           $partner->clearMediaCollection('images'); 
+           $partner->addMediaFromRequest('image')->toMediaCollection('images'); 
+        }
+        
         return redirect()->route('partners.index');
     }
     /**

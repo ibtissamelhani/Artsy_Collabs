@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Http\Controllers\Controller;
+use App\Models\Partner;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -13,7 +14,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::all();
+        $STATUS_RADIO = Project::STATUS_RADIO;
+        $partners = Partner::all();
+        return view('admin.project.index', compact('projects','STATUS_RADIO','partners'));
     }
 
     /**
@@ -29,7 +33,9 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $project = Project::create($request->all());
+        $project->addMediaFromRequest('image')->toMediaCollection('projects');
+        return redirect()->route('projects.index');
     }
 
     /**
@@ -37,7 +43,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        $STATUS_RADIO = Project::STATUS_RADIO;
+        return view('admin.project.show', compact('project','STATUS_RADIO'));
     }
 
     /**
@@ -45,7 +52,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        $STATUS_RADIO = Project::STATUS_RADIO;
+        $partners = Partner::all();
+        return view('admin.project.edit', compact('project','partners','STATUS_RADIO'));
     }
 
     /**
@@ -53,7 +62,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $project->update($request->all());
+        if ($request->hasFile('image')) {
+            $project->clearMediaCollection('projects');
+            $project->addMediaFromRequest('image')->toMediaCollection('projects');
+        }
+        return redirect()->route('projects.index');
     }
 
     /**
@@ -62,5 +76,6 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
+        return redirect()->route('projects.index');
     }
 }

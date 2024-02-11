@@ -60,8 +60,10 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $user->update($request->all());
-        $user->clearMediaCollection('profiles'); 
-        $user->addMediaFromRequest('profile')->toMediaCollection('profiles');
+        if ($request->hasFile('profile')) {
+            $user->clearMediaCollection('profiles'); 
+            $user->addMediaFromRequest('profile')->toMediaCollection('profiles');
+        }
         return redirect()->route('users.index');
     }
 
