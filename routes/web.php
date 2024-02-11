@@ -31,6 +31,10 @@ Route::resource('projects', ProjectController::class);
 // users route
 Route::resource('users', UserController::class);
 
+// assign project route 
+Route::post('assign-project', [UserController::class, 'assignProject'])->name('users.assignProject');
+
+
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Project;
+use App\Models\ProjectUser;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -50,7 +52,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('admin.user.show', compact('user'));
+        $projects = Project::all();
+        $userProjects = $user->projects;
+        return view('admin.user.show', compact('user','userProjects','projects'));
     }
 
     /**
@@ -88,5 +92,21 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('users.index');
+    }
+
+    public function assignProject(User $user, Request $request)
+    {
+        $validated = $request->validate([
+            'task' => 'required|string|max:255',
+            'project_id' => 'required|exists:projects,id',
+        ]);
+            
+        $projectUser = new ProjectUser();
+        $projectUser->task = $validated['task'];
+        $projectUser->user_id = $user->id;
+        $projectUser->project_id = $validated['project_id'];
+        $projectUser->save();
+        return redirect()->route('users.show', $user->id);
+
     }
 }
