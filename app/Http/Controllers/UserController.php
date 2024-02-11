@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -30,11 +32,17 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $user = User::create($request->all());
-        $user->addMediaFromRequest('profile')->toMediaCollection('profiles');
-        return redirect()->route('users.index');
+            try {
+                $user = User::create($request->all());
+                $user->addMediaFromRequest('profile')->toMediaCollection('profiles');
+                return redirect()->route('users.index')->with('success', 'User created successfully.');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'An error occurred while processing your request.');
+            }
+        
+        
     }
 
     /**
@@ -57,14 +65,20 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->all());
+        try{
+             $user->update($request->all());
         if ($request->hasFile('profile')) {
             $user->clearMediaCollection('profiles'); 
             $user->addMediaFromRequest('profile')->toMediaCollection('profiles');
         }
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User Updated successfully.');
+        }
+        catch(\Exception $e){
+            return redirect()->back()->with('error', 'An error occurred while processing your request.');
+        }
+       
     }
 
     /**

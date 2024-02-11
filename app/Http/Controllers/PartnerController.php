@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePartnerRequest;
+use App\Http\Requests\UpdatePartnerRequest;
 use App\Models\Partner;
 use Illuminate\Http\Request;
 
@@ -28,12 +30,17 @@ class PartnerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePartnerRequest $request)
     {
-        $partner = Partner::create($request->all());
+        try{
+            $partner = Partner::create($request->all());
+            $partner->addMediaFromRequest('image')->toMediaCollection('images');
+            return redirect()->route('partners.index')->with('success', 'Partner created successfully.');
+        }
+        catch(\Exception $e){
+            return redirect()->back()->with('error', 'An error occurred while processing your request.');
+        }
         
-        $partner->addMediaFromRequest('image')->toMediaCollection('images');
-        return redirect()->route('partners.index');
     }
 
     /**
@@ -55,15 +62,21 @@ class PartnerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Partner $partner)
+    public function update(UpdatePartnerRequest $request, Partner $partner)
     {
-        $partner->update($request->all());
-        if ($request->hasFile('image')) {
-           $partner->clearMediaCollection('images'); 
-           $partner->addMediaFromRequest('image')->toMediaCollection('images'); 
+        try{
+            $partner->update($request->all());
+            if ($request->hasFile('image')) {
+               $partner->clearMediaCollection('images'); 
+               $partner->addMediaFromRequest('image')->toMediaCollection('images'); 
+            }
+            
+            return redirect()->route('partners.index')->with('success', 'Partner updated successfully.');
         }
-        
-        return redirect()->route('partners.index');
+        catch(\Exception $e){
+            return redirect()->back()->with('error', 'An error occurred while processing your request.');
+        }
+       
     }
     /**
      * Remove the specified resource from storage.

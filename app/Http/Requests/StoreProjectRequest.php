@@ -11,7 +11,7 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'name' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'partner_id' => 'required|exists:partners,id',
+            'budget' => 'required|numeric|min:0',
+            'status' => 'required|in:1,2,3', 
+            'description' => 'required|string',
         ];
     }
 }

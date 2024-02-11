@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Partner;
 use Illuminate\Http\Request;
 
@@ -31,11 +33,17 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $project = Project::create($request->all());
-        $project->addMediaFromRequest('image')->toMediaCollection('projects');
-        return redirect()->route('projects.index');
+        try{
+            $project = Project::create($request->all());
+            $project->addMediaFromRequest('image')->toMediaCollection('projects');
+            return redirect()->route('projects.index')->with('success', 'project created successfully.'); 
+        }
+        catch(\Exception $e){
+            return redirect()->back()->with('error', 'An error occurred while processing your request.');
+        }
+        
     }
 
     /**
@@ -60,14 +68,21 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $project->update($request->all());
-        if ($request->hasFile('image')) {
-            $project->clearMediaCollection('projects');
-            $project->addMediaFromRequest('image')->toMediaCollection('projects');
+        try{
+            $project->update($request->all());
+            if ($request->hasFile('image')) {
+                $project->clearMediaCollection('projects');
+                $project->addMediaFromRequest('image')->toMediaCollection('projects');
+            }
+            return redirect()->route('projects.index')->with('success', 'project updated successfully.');
         }
-        return redirect()->route('projects.index');
+        catch(\Exception $e){
+            return redirect()->back()->with('error', 'An error occurred while processing your request.');
+        }
+
+       
     }
 
     /**
