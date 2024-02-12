@@ -15,8 +15,16 @@ class PartnerController extends Controller
      */
     public function index()
     {
+        $deletedPartners = Partner::onlyTrashed()->get();
         $partners = Partner::all();
-        return view('admin.partner.index', compact('partners'));
+        return view('admin.partner.index', compact('partners','deletedPartners'));
+    }
+
+
+    public function restore($id)
+    {
+        $partner = Partner::withTrashed()->find($id)->restore();
+        return redirect()->route('partners.index')->with('success', 'Livre restauré avec succès.');
     }
 
     /**
@@ -84,6 +92,6 @@ class PartnerController extends Controller
     public function destroy(Partner $partner)
     {
         $partner->delete();
-        return redirect()->route('partners.index');
+        return redirect()->route('partners.index')->with('success', 'Partner deleted successfully.');
     }
 }

@@ -200,61 +200,58 @@
         </button>
         </h2>
         <div id="accordion-collapse-body-3" class="hidden" aria-labelledby="accordion-collapse-heading-3">
-        <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
-           
-
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    #
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Email
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Domain
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    <span class="sr-only">Edit</span>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-           
-            @foreach ($deletedUsers as $deletedUser)
-                
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <img class="w-12 h-12 rounded-full" src="{{ $deletedUser->getFirstMediaUrl('profiles') }}" alt="user photo">
-                </th>
-                <td class="px-6 py-4">
-                    {{ $deletedUser->name }}
-                </td>
-                <td class="px-6 py-4">
-                    {{ $deletedUser->email }}
-                </td>
-                <td class="px-6 py-4">
-                    {{ $deletedUser->domain }}
-                </td>
-                <td class="px-6 py-4 text-right">
-                    <form action="{{ route('users.restore', $deletedUser->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Restore</button>
-                    </form>                
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-
-        </div>
+            <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    #
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Email
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Domain
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    <span class="sr-only">Edit</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        
+                            @foreach ($deletedUsers as $deletedUser)
+                                
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <img class="w-12 h-12 rounded-full" src="{{ $deletedUser->getFirstMediaUrl('profiles') }}" alt="user photo">
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{ $deletedUser->name }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $deletedUser->email }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $deletedUser->domain }}
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <form action="{{ route('users.restore', $deletedUser->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Restore</button>
+                                    </form>                
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
   

@@ -38,6 +38,9 @@ Route::post('assign-project/{user}', [ProjectUserController::class, 'store'])->n
 //restore user route
 Route::put('users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
 
+//restore user route
+Route::put('partners/{id}/restore', [PartnerController::class, 'restore'])->name('partners.restore');
+
 
 Route::post('/logout', function () {
     Auth::logout();
