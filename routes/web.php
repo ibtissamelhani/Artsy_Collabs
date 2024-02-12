@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
@@ -40,6 +41,9 @@ Route::put('users/{id}/restore', [UserController::class, 'restore'])->name('user
 
 //restore user route
 Route::put('partners/{id}/restore', [PartnerController::class, 'restore'])->name('partners.restore');
+
+
+Route::get('home', [HomeController::class, 'home'])->name('home');
 
 
 Route::post('/logout', function () {
