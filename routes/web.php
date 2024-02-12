@@ -3,6 +3,7 @@
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectUserController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,7 @@ Route::resource('projects', ProjectController::class);
 Route::resource('users', UserController::class);
 
 // assign project route 
-Route::post('assign-project', [UserController::class, 'assignProject'])->name('users.assignProject');
+Route::post('assign-project/{user}', [ProjectUserController::class, 'store'])->name('assignProject');
 
 
 Route::post('/logout', function () {

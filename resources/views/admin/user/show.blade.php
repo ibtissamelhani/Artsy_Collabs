@@ -29,7 +29,7 @@
                   </button>
               </div>
               <!-- Modal body -->
-              <form class="p-4 md:p-5" action="{{ route('users.assignProject', $user->id) }}" method="post">
+              <form class="p-4 md:p-5" action="{{ route('assignProject', $user) }}" method="post">
                 
                 @csrf
                   <div class="grid gap-4 mb-4 grid-cols-2">
@@ -85,13 +85,30 @@
     </div>
     <div class="grid grid-cols-4 gap-4 mt-6">
         @foreach ($userProjects as $userProject )
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
+            <div class="max-w-sm bg-gray-600 rounded overflow-hidden shadow-lg">
                 <img class="w-full" src="{{ $userProject->getFirstMediaUrl('projects') }}" alt="Placeholder image">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">{{ $userProject->name }}</div>
-                    <p class="text-gray-700 text-base">
-                        
+                    <p class="text-gray-300 font-bold">
+                       <span class="text-black">Start date :</span>  {{ $userProject->start_date }} 
                     </p>
+                    <p class="text-gray-300 font-bold mb-5">
+                         <span class="text-black">End date :</span> {{ $userProject->end_date }}
+                     </p>
+                    <span class="inline-flex items-center justify-center w-3 h-3 py-3 px-10 ms-3 text-sm font-medium 
+                        @if ($userProject->status == 1)
+                            text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300
+                        @elseif ($userProject->status == 2)
+                            text-green-800 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-300
+                        @else
+                            text-red-800 bg-red-100 rounded-full dark:bg-red-900 dark:text-red-300
+                        @endif">
+                            @foreach($STATUS_RADIO as $key => $value)
+                            @if ($userProject->status == $key)
+                                {{ $value }}
+                            @endif
+                        @endforeach
+                    </span>
                 </div>
             </div> 
         @endforeach

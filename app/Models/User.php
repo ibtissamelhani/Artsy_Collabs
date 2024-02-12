@@ -37,9 +37,7 @@ class User extends Authenticatable implements HasMedia
 
     public function projects(): BelongsToMany
     {
-        return $this->belongsToMany(Project::class)
-            ->using(ProjectUser::class)
-            ->withPivot('task');
+        return $this->belongsToMany(Project::class);
     }
 
     /**

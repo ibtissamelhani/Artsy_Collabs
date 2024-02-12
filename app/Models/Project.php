@@ -38,7 +38,7 @@ class Project extends Model implements HasMedia
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withPivot('task');
+        return $this->belongsToMany(User::class);
     }
 
     

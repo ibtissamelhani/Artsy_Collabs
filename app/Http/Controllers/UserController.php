@@ -54,7 +54,8 @@ class UserController extends Controller
     {
         $projects = Project::all();
         $userProjects = $user->projects;
-        return view('admin.user.show', compact('user','userProjects','projects'));
+        $STATUS_RADIO = Project::STATUS_RADIO;
+        return view('admin.user.show', compact('user','userProjects','projects','STATUS_RADIO'));
     }
 
     /**
@@ -94,19 +95,4 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function assignProject(User $user, Request $request)
-    {
-        $validated = $request->validate([
-            'task' => 'required|string|max:255',
-            'project_id' => 'required|exists:projects,id',
-        ]);
-            
-        $projectUser = new ProjectUser();
-        $projectUser->task = $validated['task'];
-        $projectUser->user_id = $user->id;
-        $projectUser->project_id = $validated['project_id'];
-        $projectUser->save();
-        return redirect()->route('users.show', $user->id);
-
-    }
 }
