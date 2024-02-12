@@ -19,8 +19,16 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
+        $deletedUsers = User::onlyTrashed()->get();
         $roles = Role::all();
-        return view('admin.user.index', compact('users','roles'));
+        return view('admin.user.index', compact('users','roles','deletedUsers'));
+    }
+
+    public function restore($id)
+    {
+        $user = User::withTrashed()->find($id)->restore();
+
+        return redirect()->route('users.index')->with('success', 'Livre restauré avec succès.');
     }
 
     /**
@@ -92,7 +100,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User Deleted successfully.');
     }
 
 }

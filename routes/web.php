@@ -35,6 +35,9 @@ Route::resource('users', UserController::class);
 // assign project route 
 Route::post('assign-project/{user}', [ProjectUserController::class, 'store'])->name('assignProject');
 
+//restore user route
+Route::put('users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
+
 
 Route::post('/logout', function () {
     Auth::logout();
