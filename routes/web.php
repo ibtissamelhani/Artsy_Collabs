@@ -38,10 +38,14 @@ Route::resource('users', UserController::class);
 Route::resource('Artists', ArtistController::class);
 
 
-// assign project route 
+//  projectUser route 
 Route::post('assign-project/{user}', [ProjectUserController::class, 'store'])->name('assignProject');
 
 Route::post('collaborate/{user}', [ProjectUserController::class, 'collaborate'])->name('collaborate');
+
+Route::put('projectUsers/{projectUserId}', [ProjectUserController::class, 'updateStatus'])->name('projectUsers.updateStatus');
+
+Route::delete('projectUsers/{projectUserId}', [ProjectUserController::class, 'destroy'])->name('projectUsers.destroy');
 
 
 //restore user route
