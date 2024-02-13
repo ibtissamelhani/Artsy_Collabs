@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('project_user', function (Blueprint $table) {
                 $table->id();
                 $table->string('task');
+                $table->integer('status')->default(0);
                 $table->unsignedBigInteger('project_id');
                 $table->foreign('project_id')
                     ->references('id')

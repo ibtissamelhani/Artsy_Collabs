@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
@@ -33,8 +34,15 @@ Route::resource('projects', ProjectController::class);
 // users route
 Route::resource('users', UserController::class);
 
+// artist routes
+Route::resource('Artists', ArtistController::class);
+
+
 // assign project route 
 Route::post('assign-project/{user}', [ProjectUserController::class, 'store'])->name('assignProject');
+
+Route::post('collaborate/{user}', [ProjectUserController::class, 'collaborate'])->name('collaborate');
+
 
 //restore user route
 Route::put('users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
@@ -42,8 +50,8 @@ Route::put('users/{id}/restore', [UserController::class, 'restore'])->name('user
 //restore user route
 Route::put('partners/{id}/restore', [PartnerController::class, 'restore'])->name('partners.restore');
 
+Route::get('/dashboard', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('home', [HomeController::class, 'home'])->name('home');
 
 
 Route::post('/logout', function () {
@@ -51,9 +59,9 @@ Route::post('/logout', function () {
     return redirect('/');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('admin.dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

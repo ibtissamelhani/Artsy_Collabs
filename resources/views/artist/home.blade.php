@@ -13,9 +13,9 @@
     </section>
     <section class="grid grid-cols-4 gap-4 px-20 pt-20 bg-orange-800/5 pb-8 mx-auto">
         @foreach ($projects as $project )
-            <div class="rounded-lg bg-white  shadow-md hover:shadow-2xl dark:bg-neutral-700">
-                <a href="#!">
-                    <img class="rounded-t-lg" src="{{ $project->getFirstMediaUrl('projects') }}" alt="" />
+            <div class="rounded-lg bg-white   shadow-md hover:shadow-2xl dark:bg-neutral-700">
+                <a href="{{ route('Artists.show',$project->id) }}">
+                    <img class="rounded-t-lg  h-52  " style="width: 100%;" src="{{ $project->getFirstMediaUrl('projects') }}" alt="" />
                 </a>
                 <div class="p-6">
                     <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">{{ $project->name }}</h5>

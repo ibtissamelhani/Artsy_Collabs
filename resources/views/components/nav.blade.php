@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Landwind - Tailwind CSS Landing Page Demo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+
+    <title>Artsy-collabs</title>
 
     <!-- Meta SEO -->
     <meta name="title" content="Landwind - Tailwind CSS Landing Page">
@@ -64,7 +66,7 @@
                 <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
                     <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                         <li>
-                            <a href="#" class="block py-2 pl-3 pr-4 text-black hover:text-orange-500  lg:p-0 dark:text-white" aria-current="page">Home</a>
+                            <a href="{{ route('Artists.index') }}" class="block py-2 pl-3 pr-4 text-black hover:text-orange-500  lg:p-0 dark:text-white" aria-current="page">Home</a>
                         </li>
                         <li>
                             <a href="#" class="block py-2 pl-3 pr-4 text-black hover:text-orange-500 lg:p-0 dark:text-white" aria-current="page">My Projects</a>
@@ -77,6 +79,7 @@
         </nav>
     </header>
     {{ $slot }}
-    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    {{-- <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 </body>
 </html>

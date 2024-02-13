@@ -13,9 +13,9 @@
                     </div>
                     <div>
                    
-                        <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">
-                          </h5>
-                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Number of </p>
+                        <h5 class="leading-none text-2xl font-bold text-yellow-500 dark:text-yellow-500 pb-1">
+                         {{ $partnersCount }} </h5>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Partners</p>
                     </div>
                 </div>
             </div>
@@ -36,9 +36,9 @@
                     </div>
                     <div>
               
-                        <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">
-                         </h5>
-                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Number of users</p>
+                        <h5 class="leading-none text-2xl font-bold text-red-500 dark:text-red-500 pb-1">
+                         {{ $usersCount }}</h5>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Users</p>
                     </div>
                 </div>
             </div>
@@ -58,9 +58,9 @@
                     </div>
                     <div>
                  
-                        <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">
-                            </h5>
-                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Number of 
+                        <h5 class="leading-none text-2xl font-bold text-green-500 dark:text-green-500 pb-1">
+                            {{ $projectCount }}</h5>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">projects
                         </p>
                     </div>
                 </div>
@@ -72,48 +72,44 @@
 
 <div class="relative overflow-x-auto shadow-md mt-6 sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <caption class="p-5 text-lg font-semibold text-center rtl:text-right text-white-700 bg-white dark:text-text-700 dark:bg-gray-800">
+        <caption class="p-5 text-lg font-semibold text-center rtl:text-right text-orange-300 bg-white dark:text-text-700 dark:bg-gray-800">
             Artists requested to be included in  projects.
         </caption>
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Product name
+                    artist
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Color
+                    project
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Category
+                    task
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Price
-                </th>
+                
                 <th scope="col" class="px-6 py-3">
                     <span class="sr-only">Edit</span>
                 </th>
             </tr>
         </thead>
         <tbody>
+            @foreach ($requests as $request )
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
+                    {{ $request->user->name }}
                 </th>
                 <td class="px-6 py-4">
-                    Silver
+                    {{ $request->project->name }}
                 </td>
                 <td class="px-6 py-4">
-                    Laptop
+                    {{ $request->task }}
                 </td>
-                <td class="px-6 py-4">
-                    $2999
-                </td>
-                <td class="px-6 py-4 text-right">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Accept</a>
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Refuse</a>
+                <td class="flex gap-4 font-bold px-6 py-4 text-right">
+                    <a href="#" class="font-medium  text-green-600 dark:text-green-500 hover:underline">Accept</a>
+                    <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Refuse</a>
                 </td>
             </tr>
-      
+            @endforeach
         </tbody>
     </table>
 </div>

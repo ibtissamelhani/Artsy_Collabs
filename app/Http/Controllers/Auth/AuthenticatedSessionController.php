@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
         if($user->role->name === 'admin'){
             return redirect()->intended(RouteServiceProvider::HOME);
         }else{
-            return redirect()->route('home');
+            return redirect()->route('Artists.index');
         }
         
     }
