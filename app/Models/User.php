@@ -41,6 +41,11 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Project::class);
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role_id === 1;
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

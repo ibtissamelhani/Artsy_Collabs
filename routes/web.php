@@ -24,37 +24,50 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware(['auth', 'verified'])->group(function () {
+    
+    // artist routes
+    Route::resource('Artists', ArtistController::class);
 
-// Partners route
-Route::resource('partners', PartnerController::class);
+    //  projectUser route 
 
-// Project route
-Route::resource('projects', ProjectController::class);
+    Route::post('collaborate/{user}', [ProjectUserController::class, 'collaborate'])->name('collaborate');
+    
+    Route::group(['middleware' => ['admin']], function () {
 
-// users route
-Route::resource('users', UserController::class);
+        Route::post('assign-project/{user}', [ProjectUserController::class, 'store'])->name('assignProject');
 
-// artist routes
-Route::resource('Artists', ArtistController::class);
+        // Partners route
+        Route::resource('partners', PartnerController::class);
 
+        // Project route
+        Route::resource('projects', ProjectController::class);
 
-//  projectUser route 
-Route::post('assign-project/{user}', [ProjectUserController::class, 'store'])->name('assignProject');
-
-Route::post('collaborate/{user}', [ProjectUserController::class, 'collaborate'])->name('collaborate');
-
-Route::put('projectUsers/{projectUserId}', [ProjectUserController::class, 'updateStatus'])->name('projectUsers.updateStatus');
-
-Route::delete('projectUsers/{projectUserId}', [ProjectUserController::class, 'destroy'])->name('projectUsers.destroy');
+        // users route
+        Route::resource('users', UserController::class);
 
 
-//restore user route
-Route::put('users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
+        Route::put('projectUsers/{projectUserId}', [ProjectUserController::class, 'updateStatus'])->name('projectUsers.updateStatus');
 
-//restore user route
-Route::put('partners/{id}/restore', [PartnerController::class, 'restore'])->name('partners.restore');
+        Route::delete('projectUsers/{projectUserId}', [ProjectUserController::class, 'destroy'])->name('projectUsers.destroy');
 
-Route::get('/dashboard', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+        //restore user route
+        Route::put('users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
+
+        //restore user route
+        Route::put('partners/{id}/restore', [PartnerController::class, 'restore'])->name('partners.restore');
+        
+        //dashbord route
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+
+    });
+});
+
+
+
+
+
+
 
 
 
@@ -62,10 +75,6 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/');
 });
-
-// Route::get('/dashboard', function () {
-//     return view('admin.dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
